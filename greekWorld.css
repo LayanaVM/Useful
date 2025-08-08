@@ -1,0 +1,36 @@
+/* Flickering effect */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0;
+  }
+}
+
+body.greek-flicker {
+  animation: flicker 1s infinite;
+  background-color: black !important;
+  color: lime !important;
+}
+
+/* Dark overlay */
+.greek-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 99998;
+}
+
+/* Circle spotlight */
+.greek-spotlight {
+  position: fixed;
+  top: 40%;
+  left: 40%;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, transparent 40%, black 100%);
+  z-index: 99999;
+  pointer-events: none;
+}

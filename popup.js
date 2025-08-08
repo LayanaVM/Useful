@@ -1,8 +1,10 @@
-document.getElementById("start").addEventListener("click", async () => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    files: ["medusaEye.js"]
-  });
-});
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Medusa Extension</title>
+</head>
+<body>
+  <button id="start">Start</button>
+  <script src="popup.js"></script>
+</body>
+</html>
