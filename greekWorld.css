@@ -1,36 +1,24 @@
-/* Flickering effect */
-@keyframes flicker {
-  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-    opacity: 1;
-  }
-  20%, 24%, 55% {
-    opacity: 0;
-  }
+body.flicker-start {
+  transition: background-color 0.5s ease;
 }
 
-body.greek-flicker {
-  animation: flicker 1s infinite;
-  background-color: black !important;
-  color: lime !important;
+body.dark-mode {
+  background-color: #0f0f0f;
+  color: #f5f5f5;
 }
 
-/* Dark overlay */
-.greek-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.9);
-  z-index: 99998;
-}
-
-/* Circle spotlight */
-.greek-spotlight {
-  position: fixed;
-  top: 40%;
-  left: 40%;
-  width: 200px;
-  height: 200px;
+.greek-exit-circle {
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  background: radial-gradient(circle, transparent 40%, black 100%);
-  z-index: 99999;
-  pointer-events: none;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  z-index: 9999;
+}
+
+.greek-exit-circle:hover {
+  box-shadow: 0 0 25px 10px gold;
+  background: gold;
+  cursor: pointer;
 }
