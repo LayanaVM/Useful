@@ -1,5 +1,23 @@
-Keep contentScript.js only for Medusa Eye (and hover logic).
-
-Dispatch the ENTER_GREEK_WORLD event only after injecting greekWorld.js.
-
-Update popup.js with the injected function above.
+{
+  "manifest_version": 3,
+  "name": "Medusa Eye Extension",
+  "version": "1.0",
+  "description": "Enter the Greek world when you stare at Medusa's eye.",
+  "permissions": ["scripting", "activeTab"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["greekWorld.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
