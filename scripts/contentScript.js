@@ -48,53 +48,50 @@ function jumbleAllText() {
   
   let jumbledCount = 0;
   
-  // Jumble paragraphs
-  const paragraphs = document.querySelectorAll("p");
-  console.log(`Found ${paragraphs.length} paragraphs`);
-  paragraphs.forEach((p, index) => {
-    if (p.innerText.trim()) {
-      const originalText = p.innerText;
-      const words = originalText.split(" ");
-      const jumbled = words.map(jumbleWord).join(" ");
-      p.innerText = jumbled;
-      jumbledCount++;
-      console.log(`Jumbled paragraph ${index + 1}: "${originalText}" -> "${jumbled}"`);
-    }
-  });
+  // Target specific elements that are more likely to contain readable text
+  const selectors = [
+    "p", "h1", "h2", "h3", "h4", "h5", "h6", 
+    "li", "td", "th", "span", "div",
+    ".mw-parser-output p", // Wikipedia specific
+    ".mw-parser-output li", // Wikipedia specific
+    ".mw-parser-output h1", // Wikipedia specific
+    ".mw-parser-output h2", // Wikipedia specific
+    ".mw-parser-output h3", // Wikipedia specific
+    ".mw-parser-output h4", // Wikipedia specific
+    ".mw-parser-output h5", // Wikipedia specific
+    ".mw-parser-output h6"  // Wikipedia specific
+  ];
   
-  // Jumble headings
-  const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
-  console.log(`Found ${headings.length} headings`);
-  headings.forEach((h, index) => {
-    if (h.innerText.trim()) {
-      const originalText = h.innerText;
-      const words = originalText.split(" ");
-      const jumbled = words.map(jumbleWord).join(" ");
-      h.innerText = jumbled;
-      jumbledCount++;
-      console.log(`Jumbled heading ${index + 1}: "${originalText}" -> "${jumbled}"`);
-    }
-  });
+  // Combine all selectors
+  const allElements = document.querySelectorAll(selectors.join(", "));
+  console.log(`Found ${allElements.length} total elements`);
   
-  // Jumble other text elements
-  const textElements = document.querySelectorAll("span, div, li, td, th");
-  console.log(`Found ${textElements.length} text elements`);
-  textElements.forEach((el, index) => {
-    if (el.children.length === 0 && el.innerText.trim()) {
+  allElements.forEach((el, index) => {
+    // Skip elements that are likely to be navigation, ads, or non-content
+    if (el.closest('nav') || el.closest('header') || el.closest('footer') || 
+        el.closest('.sidebar') || el.closest('.navigation') || el.closest('.menu')) {
+      return;
+    }
+    
+    // Only process elements with actual text content
+    if (el.innerText.trim() && el.children.length === 0) {
       const originalText = el.innerText;
       const words = originalText.split(" ");
       const jumbled = words.map(jumbleWord).join(" ");
-      el.innerText = jumbled;
-      jumbledCount++;
-      console.log(`Jumbled element ${index + 1}: "${originalText}" -> "${jumbled}"`);
+      
+      if (jumbled !== originalText) {
+        el.innerText = jumbled;
+        jumbledCount++;
+        console.log(`Jumbled element ${index + 1}: "${originalText}" -> "${jumbled}"`);
+      }
     }
   });
   
   console.log(`Text jumbling complete! Jumbled ${jumbledCount} elements.`);
   
   // Show a visual indicator that jumbling happened
-  const indicator = document.createElement('div');
-  indicator.style.cssText = `
+  const successIndicator = document.createElement('div');
+  successIndicator.style.cssText = `
     position: fixed;
     top: 10px;
     right: 10px;
@@ -106,13 +103,13 @@ function jumbleAllText() {
     z-index: 10000;
     font-family: Arial, sans-serif;
   `;
-  indicator.textContent = `Jumbled ${jumbledCount} text elements!`;
-  document.body.appendChild(indicator);
+  successIndicator.textContent = `Jumbled ${jumbledCount} text elements!`;
+  document.body.appendChild(successIndicator);
   
   // Remove indicator after 3 seconds
   setTimeout(() => {
-    if (indicator.parentNode) {
-      indicator.parentNode.removeChild(indicator);
+    if (successIndicator.parentNode) {
+      successIndicator.parentNode.removeChild(successIndicator);
     }
   }, 3000);
 }
