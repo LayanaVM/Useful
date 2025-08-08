@@ -1,3 +1,4 @@
+// This script sets up the Medusa Eye visual – logic lives in contentScript.js
 if (!document.getElementById("medusa-eye")) {
   const eye = document.createElement("div");
   eye.id = "medusa-eye";

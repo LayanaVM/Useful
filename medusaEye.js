@@ -1,8 +1,8 @@
-// Remove any existing eye if present
+// Remove existing eye if already present
 const existing = document.getElementById("medusa-eye");
 if (existing) existing.remove();
 
-// Create the eye element
+// Create Medusa eye
 const eye = document.createElement("div");
 eye.id = "medusa-eye";
 eye.style.position = "fixed";
@@ -15,13 +15,13 @@ eye.style.borderRadius = "50%";
 eye.style.background = "radial-gradient(ellipse at center, green 0%, black 80%)";
 eye.style.boxShadow = "0 0 20px 10px lime";
 eye.style.zIndex = "9999";
+eye.style.cursor = "pointer";
 document.body.appendChild(eye);
 
 let hoverTime = 0;
 let hoverTimer;
 let triggered = false;
 
-// Hover starts
 eye.addEventListener("mouseenter", () => {
   hoverTimer = setInterval(() => {
     hoverTime += 100;
@@ -30,20 +30,16 @@ eye.addEventListener("mouseenter", () => {
       window.dispatchEvent(new Event("ENTER_GREEK_WORLD"));
       console.log("🌀 Entering Greek World...");
       clearInterval(hoverTimer);
-      eye.remove(); // remove eye immediately
+      eye.remove();
     }
   }, 100);
 });
 
-// Hover ends
 eye.addEventListener("mouseleave", () => {
   clearInterval(hoverTimer);
   hoverTime = 0;
 });
 
-// Auto remove after 5 seconds if not triggered
 setTimeout(() => {
-  if (!triggered) {
-    eye.remove();
-  }
+  if (!triggered) eye.remove();
 }, 5000);

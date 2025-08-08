@@ -1,34 +1,5 @@
 import { jumbleText } from "./utils/textJumbler.js";
 
-// Inject Medusa Eye only once
-if (!document.getElementById("medusa-eye")) {
-  const eye = document.createElement("div");
-  eye.id = "medusa-eye";
-  eye.innerText = "👁";
-  eye.style = `
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    font-size: 32px;
-    z-index: 9999;
-    transition: transform 0.3s ease;
-    filter: grayscale(1);
-    cursor: pointer;
-  `;
-  document.body.appendChild(eye);
-
-  eye.addEventListener("mouseenter", () => {
-    eye.style.transform = "scale(1.2)";
-    eye.style.filter = "grayscale(0)";
-  });
-
-  eye.addEventListener("mouseleave", () => {
-    eye.style.transform = "scale(1)";
-    eye.style.filter = "grayscale(1)";
-  });
-}
-
-// Handle Greek World transition
 window.addEventListener("ENTER_GREEK_WORLD", () => {
   scrambleAllText();
   startFlickerEffect();
