@@ -1,46 +1,36 @@
 // scripts/contentScript.js
 
-console.log("🔮 Medusa Curse Content Script Loaded!");
+console.log("Word Jumbler Content Script Loaded!");
 
-// Inject CSS for Greek World effects
-const greekWorldCSS = `
-body.greek-light {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  transition: background-color 0.5s, color 0.5s;
-}
-
-body.greek-dark {
-  background-color: #000000 !important;
-  color: #ffffff !important;
-  transition: background-color 0.5s, color 0.5s;
-}
-
-#exit-circle {
+// Add a simple visual indicator that the script is loaded
+const indicator = document.createElement('div');
+indicator.style.cssText = `
   position: fixed;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffd700, #ff4500);
-  opacity: 0.7;
-  transition: box-shadow 0.3s, opacity 0.3s;
-  z-index: 9999;
-  cursor: pointer;
-}
-
-#exit-circle:hover {
-  box-shadow: 0 0 20px 8px rgba(255, 255, 255, 0.8);
-  opacity: 1;
-}
+  top: 10px;
+  left: 10px;
+  background: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  z-index: 10000;
+  font-family: Arial, sans-serif;
+  opacity: 0.8;
 `;
+indicator.textContent = 'Word Jumbler Loaded';
+document.body.appendChild(indicator);
 
-// Inject the CSS immediately
-const style = document.createElement('style');
-style.textContent = greekWorldCSS;
-document.head.appendChild(style);
+// Remove indicator after 5 seconds
+setTimeout(() => {
+  if (indicator.parentNode) {
+    indicator.parentNode.removeChild(indicator);
+  }
+}, 5000);
 
 // Word jumbling function
 function jumbleWord(word) {
+  // Skip words with special characters or numbers
+  if (!/^[a-zA-Z]+$/.test(word)) return word;
   if (word.length <= 3) return word;
   
   const middle = word.slice(1, -1).split('');
@@ -52,131 +42,97 @@ function jumbleWord(word) {
   return word[0] + middle.join('') + word[word.length - 1];
 }
 
-// Greek World state
-let chaosActive = false;
-let flickerInterval;
-
-// Main function to start the Greek World
-function startGreekWorld() {
-  if (chaosActive) return; // Prevent multiple activations
-  
-  console.log("🔮 Starting Greek World...");
-  chaosActive = true;
-  
-  // Jumble all text elements
-  jumbleAllText();
-  
-  // Start visual effects
-  startFlickerEffect();
-  spawnExitCircle();
-  
-  console.log("🔮 Greek World activated!");
-}
-
 // Jumble all text on the page
 function jumbleAllText() {
-  console.log("🔮 Jumbling text elements...");
+  console.log("Jumbling text elements...");
+  
+  let jumbledCount = 0;
   
   // Jumble paragraphs
   const paragraphs = document.querySelectorAll("p");
-  paragraphs.forEach(p => {
+  console.log(`Found ${paragraphs.length} paragraphs`);
+  paragraphs.forEach((p, index) => {
     if (p.innerText.trim()) {
-      const words = p.innerText.split(" ");
+      const originalText = p.innerText;
+      const words = originalText.split(" ");
       const jumbled = words.map(jumbleWord).join(" ");
       p.innerText = jumbled;
+      jumbledCount++;
+      console.log(`Jumbled paragraph ${index + 1}: "${originalText}" -> "${jumbled}"`);
     }
   });
   
   // Jumble headings
   const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
-  headings.forEach(h => {
+  console.log(`Found ${headings.length} headings`);
+  headings.forEach((h, index) => {
     if (h.innerText.trim()) {
-      const words = h.innerText.split(" ");
+      const originalText = h.innerText;
+      const words = originalText.split(" ");
       const jumbled = words.map(jumbleWord).join(" ");
       h.innerText = jumbled;
+      jumbledCount++;
+      console.log(`Jumbled heading ${index + 1}: "${originalText}" -> "${jumbled}"`);
     }
   });
   
   // Jumble other text elements
   const textElements = document.querySelectorAll("span, div, li, td, th");
-  textElements.forEach(el => {
+  console.log(`Found ${textElements.length} text elements`);
+  textElements.forEach((el, index) => {
     if (el.children.length === 0 && el.innerText.trim()) {
-      const words = el.innerText.split(" ");
+      const originalText = el.innerText;
+      const words = originalText.split(" ");
       const jumbled = words.map(jumbleWord).join(" ");
       el.innerText = jumbled;
+      jumbledCount++;
+      console.log(`Jumbled element ${index + 1}: "${originalText}" -> "${jumbled}"`);
     }
   });
   
-  console.log("🔮 Text jumbling complete!");
+  console.log(`Text jumbling complete! Jumbled ${jumbledCount} elements.`);
+  
+  // Show a visual indicator that jumbling happened
+  const indicator = document.createElement('div');
+  indicator.style.cssText = `
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    z-index: 10000;
+    font-family: Arial, sans-serif;
+  `;
+  indicator.textContent = `Jumbled ${jumbledCount} text elements!`;
+  document.body.appendChild(indicator);
+  
+  // Remove indicator after 3 seconds
+  setTimeout(() => {
+    if (indicator.parentNode) {
+      indicator.parentNode.removeChild(indicator);
+    }
+  }, 3000);
 }
 
-// Start the flicker effect
-function startFlickerEffect() {
-  console.log("🔮 Starting flicker effect...");
-  
-  let isDark = false;
-  document.body.classList.add("greek-light");
-  
-  flickerInterval = setInterval(() => {
-    isDark = !isDark;
-    document.body.classList.toggle("greek-dark", isDark);
-    document.body.classList.toggle("greek-light", !isDark);
-  }, 1500);
-}
-
-// Spawn the exit circle
-function spawnExitCircle() {
-  console.log("🔮 Spawning exit circle...");
-  
-  const circle = document.createElement("div");
-  circle.id = "exit-circle";
-  
-  // Random position
-  const randX = Math.random() * 80 + 10;
-  const randY = Math.random() * 80 + 10;
-  circle.style.left = `${randX}%`;
-  circle.style.top = `${randY}%`;
-  
-  // Add click event
-  circle.addEventListener("click", exitGreekWorld);
-  
-  // Add to page
-  document.body.appendChild(circle);
-}
-
-// Exit the Greek World
-function exitGreekWorld() {
-  console.log("🔮 Exiting Greek World...");
-  
-  chaosActive = false;
-  
-  // Stop flicker
-  if (flickerInterval) {
-    clearInterval(flickerInterval);
-  }
-  
-  // Remove visual effects
-  document.body.classList.remove("greek-light", "greek-dark");
-  
-  // Remove exit circle
-  const circle = document.getElementById("exit-circle");
-  if (circle) {
-    circle.remove();
-  }
-  
-  console.log("🔮 Greek World exited!");
-}
+// Make functions available globally for testing
+window.testJumble = jumbleAllText;
+window.testJumbleWord = jumbleWord;
 
 // Listen for messages from popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log("🔮 Message received:", request);
+  console.log("Message received:", request);
   
-  if (request.action === "startGreekWorld") {
-    startGreekWorld();
-    sendResponse({ success: true, message: "Greek World activated!" });
+  if (request.action === "jumbleWords") {
+    console.log("Starting word jumbling...");
+    jumbleAllText();
+    sendResponse({ success: true, message: "Words jumbled!" });
   }
   
   return true; // Keep message channel open
 });
 
-console.log("🔮 Content script ready!");
+console.log("Word Jumbler ready!");
+console.log("Test functions available: window.testJumble() and window.testJumbleWord('example')");

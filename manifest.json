@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Medusa Curse Extension",
+  "name": "Word Jumbler Extension",
   "version": "1.0",
-  "description": "A chaotic mythological curse wrapped in a browser extension.",
+  "description": "A simple extension that jumbles letters in words on web pages.",
   "permissions": ["activeTab"],
   "action": {
     "default_popup": "popup/popup.html"
