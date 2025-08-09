@@ -48,11 +48,10 @@ For Software:
 
 Screenshots (Add at least 3)
 
-https://drive.google.com/file/d/1G5j0yDV5ubjdiaTHz9YLRfBz0ixDP9Wl/view?usp=drivesdk
+![3fcdf448-dea0-4ebe-b1f8-e91fc2abbad4](https://github.com/user-attachments/assets/09d12cb7-813f-4773-927f-e1b66d4fc756)
+![WhatsApp Image 2025-08-09 at 06 08 58_d883fae6](https://github.com/user-attachments/assets/997af26c-843b-4bfa-bd83-e6a0c3321308)
+![WhatsApp Image 2025-08-09 at 06 08 58_f07f1afd](https://github.com/user-attachments/assets/8e06c094-716b-4686-bab7-3cfbec83df45)
 
-https://drive.google.com/file/d/1-IikYCQjVHv78maR6ETAPwXXNRSp0kBv/view?usp=drivesdk
-
-https://drive.google.com/file/d/1CK-fq3HUYrb6Bj3EaRGAbTrNYpgCQ-_b/view?usp=drivesdk
 
 Build Photos
 
